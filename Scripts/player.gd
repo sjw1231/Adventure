@@ -1,0 +1,53 @@
+extends CharacterBody3D
+class_name Player
+
+static var instance: Player
+
+@export var speed = 5.0
+@export var jump_velocity = 4.5
+@export var camera: Camera3D
+@export var model: Node3D
+
+var spawn_position
+var target_angle: float = PI
+
+func _ready() -> void:
+	if instance == null:
+		instance = self
+	else:
+		queue_free()
+	
+	spawn_position = position
+
+func _process(delta: float) -> void:
+	var camera_angle = camera.global_rotation.y
+	var input_dir := Input.get_vector("left", "right", "forward", "backward")
+	var input_angle = atan2(input_dir.x, input_dir.y)
+	
+	if input_dir	 != Vector2.ZERO and not GameManager.instance.is_complete:
+		target_angle = camera_angle + input_angle
+		#model.global_rotation.y = target_angle
+		model.global_rotation.y = lerp_angle(model.global_rotation.y, target_angle, delta * 15)
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not GameManager.instance.is_complete:
+		velocity.y = jump_velocity
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir := Input.get_vector("left", "right", "forward", "backward")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
+	if direction  and not GameManager.instance.is_complete:
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
+
+	move_and_slide()

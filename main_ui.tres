@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dq1blwy3qftxp"]
+
+[ext_resource type="FontFile" uid="uid://plwyf4rufh8y" path="res://Assets/Fonts/ZCOOL-Wenyi.ttf" id="1_ke8oh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ke8oh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke8oh"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.556863)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0.147672, 0.147672, 0.147672, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[resource]
+Button/font_sizes/font_size = 64
+Button/styles/focus = SubResource("StyleBoxEmpty_ke8oh")
+CherryLabel/base_type = &"Label"
+CherryLabel/colors/font_outline_color = Color(0.956811, 3.58574e-06, 3.85046e-07, 1)
+CoinLabel/base_type = &"Label"
+CoinLabel/colors/font_outline_color = Color(1, 0.843137, 0.25098, 1)
+Label/colors/font_outline_color = Color(0.254122, 0.689846, 0.979275, 1)
+Label/constants/outline_size = 24
+Label/font_sizes/font_size = 72
+Label/fonts/font = ExtResource("1_ke8oh")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ke8oh")
